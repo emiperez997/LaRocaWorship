@@ -15,7 +15,7 @@ model User {
   lastName  String
   email     String     @unique
   password  String
-  role      Role
+  role      Role       @default(user)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   lists     List[] // Relación con List
@@ -36,10 +36,10 @@ model Song {
   id            String     @id @default(uuid())
   title         String
   lyrics        String
-  initialPhrase String?
+  initialPhrase String
   artist        String
-  category      String?
-  status        Status
+  categories    String[]
+  status        Status     @default(pending)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   lists         ListSong[] // Relación con ListSong

@@ -2,6 +2,6 @@ export interface Favorite {
   id: string;
   userId: string;
   songId: string;
-  savedKey: string;
+  trasposedSteps: number;
   createdAt: Date;
 }

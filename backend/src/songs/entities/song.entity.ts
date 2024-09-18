@@ -8,8 +8,8 @@ export interface Song {
   lyrics: string;
   initialPhrase: string;
   artist: string;
-  category: string;
-  status: Status;
+  categories: string[];
+  status?: Status;
   createdAt: Date;
   updatedAt: Date;
   lists?: List[];

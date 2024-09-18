@@ -6,23 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
+import { FiltersSongsDto } from './dto/filters-songs.dto';
 
 @Controller('songs')
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
   @Post()
-  create(@Body() createSongDto: CreateSongDto) {
+  create(@Body(ValidationPipe) createSongDto: CreateSongDto) {
     return this.songsService.create(createSongDto);
   }
 
   @Get()
-  findAll() {
-    return this.songsService.findAll();
+  findAll(@Query() query: FiltersSongsDto) {
+    return this.songsService.findAll(query);
   }
 
   @Get(':id')
@@ -31,7 +34,10 @@ export class SongsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSongDto: UpdateSongDto) {
+  update(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updateSongDto: UpdateSongDto,
+  ) {
     return this.songsService.update(id, updateSongDto);
   }
 
