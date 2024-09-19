@@ -15,14 +15,14 @@ import { UpdateListDto } from './dto/update-list.dto';
 export class ListsController {
   constructor(private readonly listsService: ListsService) {}
 
-  @Get()
-  findAll() {
-    return this.listsService.findAll();
+  @Get(':userId')
+  findAll(@Param('userId') userId: string) {
+    return this.listsService.findAll(userId);
   }
 
-  @Get(':id')
+  @Get(':id/songs')
   findOne(@Param('id') id: string) {
-    return this.listsService.findOne(+id);
+    return this.listsService.findOne(id);
   }
 
   @Post()
@@ -30,13 +30,18 @@ export class ListsController {
     return this.listsService.create(createListDto);
   }
 
+  @Post(':id/:songId')
+  addSong(@Param('id') id: string, @Param('songId') songId: string) {
+    return this.listsService.addSong(id, songId);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    return this.listsService.update(+id, updateListDto);
+    return this.listsService.update(id, updateListDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.listsService.remove(+id);
+    return this.listsService.remove(id);
   }
 }
