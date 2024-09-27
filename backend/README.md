@@ -78,8 +78,23 @@ enum Status {
 
 ## Progreso
 
-- [x] Entidad Song
-- [x] Entidad User
-- [x] Entidad List
-- [x] Entidad Favorite
-- [x] Entidad Auth
+**Entities**
+
+- [x] Entity Song
+- [x] Entity User
+- [x] Entity List
+- [-] Entity Favorite
+- [ ] Entity Auth
+
+**Features**
+
+- [ ] Add Authentication
+- [ ] Protect Routes
+
+## Additions
+
+- [ ] Test API with Rest Client
+- [x] `dev.nix` config for `idx` editor
+- [x] `settings.json` for `vscode/idx`
+- [x] `.env.example` for environment variables
+- [ ] Testing with `jest`
