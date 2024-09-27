@@ -3,13 +3,25 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from './entities/user.entity';
+import { hashPassword } from 'src/utils/hash';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   findAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async findOne(id: string) {
@@ -34,9 +46,11 @@ export class UsersService {
       },
     });
 
-    if (user) {
+    if (user && user.length > 0) {
       throw new HttpException('User already exists', 400);
     }
+
+    const hashedPassword = await hashPassword(createUserDto.password);
 
     try {
       return this.prisma.user.create({
@@ -45,7 +59,7 @@ export class UsersService {
           firstName: createUserDto.firstName,
           lastName: createUserDto.lastName,
           email: createUserDto.email,
-          password: createUserDto.password,
+          password: hashedPassword,
         },
       });
     } catch (error) {

@@ -75,3 +75,11 @@ enum Status {
   rejected
 }
 ```
+
+## Progreso
+
+- [x] Entidad Song
+- [x] Entidad User
+- [x] Entidad List
+- [x] Entidad Favorite
+- [x] Entidad Auth
