@@ -1,9 +1,15 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+
 import { User } from './entities/user.entity';
-import { hashPassword } from 'src/utils/hash';
+import { PrismaService } from '@src/prisma/prisma.service';
+import { hashPassword } from '@src/utils/hash';
 
 @Injectable()
 export class UsersService {
@@ -30,7 +36,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new HttpException('User not found', 404);
+      throw new NotFoundException();
     }
 
     return user;
@@ -47,7 +53,7 @@ export class UsersService {
     });
 
     if (user && user.length > 0) {
-      throw new HttpException('User already exists', 400);
+      throw new ConflictException('Username or email already in use');
     }
 
     const hashedPassword = await hashPassword(createUserDto.password);
@@ -63,7 +69,7 @@ export class UsersService {
         },
       });
     } catch (error) {
-      throw new HttpException('Error creating user', 500);
+      throw new InternalServerErrorException();
     }
   }
 
@@ -73,7 +79,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new HttpException('User not found', 404);
+      throw new NotFoundException();
     }
 
     try {
@@ -86,7 +92,7 @@ export class UsersService {
         },
       });
     } catch (error) {
-      throw new HttpException('Error updating user', 500);
+      throw new InternalServerErrorException();
     }
   }
 
@@ -96,7 +102,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new HttpException('User not found', 404);
+      throw new NotFoundException();
     }
 
     try {
@@ -104,7 +110,7 @@ export class UsersService {
         where: { id },
       });
     } catch (error) {
-      throw new HttpException('Error removing user', 500);
+      throw new InternalServerErrorException();
     }
   }
 }

@@ -10,6 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 
 @Controller('users')
 export class UsersController {
@@ -26,8 +27,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  findOne(@Param() params: FindByUuidParamDto) {
+    return this.usersService.findOne(params.id);
   }
 
   @Patch(':id')

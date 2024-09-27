@@ -1,12 +1,15 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Song } from './entities/song.entity';
-import {
-  PrismaClientKnownRequestError,
-  PrismaClientValidationError,
-} from '@prisma/client/runtime/library';
+import { PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
 
 @Injectable()
@@ -60,10 +63,14 @@ export class SongsService {
   }
 
   async findOne(id: string): Promise<Song> {
-    const song = await this.findOne(id);
+    const song = await this.prisma.song.findUnique({
+      where: {
+        id,
+      },
+    });
 
     if (!song) {
-      throw new HttpException('Song not found', 404);
+      throw new NotFoundException();
     }
 
     return song;
@@ -73,7 +80,7 @@ export class SongsService {
     const song = await this.findOne(id);
 
     if (!song) {
-      throw new HttpException('Song not found', 404);
+      throw new NotFoundException();
     }
 
     try {
@@ -94,13 +101,10 @@ export class SongsService {
       return updatedSong;
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
-        throw new HttpException(
-          `Error updating the song: ${error.message}`,
-          400,
-        );
+        throw new BadRequestException(error.message);
       }
 
-      throw new HttpException(`Error updating the song: ${error}`, 500);
+      throw new InternalServerErrorException();
     }
   }
 
@@ -108,7 +112,7 @@ export class SongsService {
     const song = await this.findOne(id);
 
     if (!song) {
-      throw new HttpException('Song not found', 404);
+      throw new NotFoundException();
     }
 
     try {
@@ -120,7 +124,7 @@ export class SongsService {
 
       return deletedSong;
     } catch (error) {
-      throw new HttpException(`Error deleting the song: ${error}`, 500);
+      throw new InternalServerErrorException();
     }
   }
 }

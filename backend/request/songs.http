@@ -1,0 +1,31 @@
+GET http://localhost:5000/api/songs
+
+###
+
+GET http://localhost:5000/api/songs/dasda
+
+###
+ 
+POST http://localhost:5000/api/songs
+Content-Type: application/json
+
+{
+    "title": "Cantando Santo",
+    "lyrics": "[A] [E] [F#m] [D] \nYo quiero estar, adorandote Señor \n [A] [E] [D] \nPostrado hoy ante tu altar \n [A] [E] \nCantando Santo, Santo \n [F#m] [D] \nSanto es el Señor \n [A] [E] [D] \nPoderoso, para siempre reinará",
+    "initialPhrase": "Yo quiero estar, adorandote Señor",
+    "artist": "Job Gonzalez",
+    "categories": ["Adoración"]
+}
+
+###
+
+PATCH  http://localhost:5000/api/songs/2f5c5ccf-1f9e-404e-8373-60fe732df65f
+Content-Type: application/json
+
+{
+  "status": "approved"
+}
+
+###
+
+DELETE http://localhost:5000/api/songs/9414ff5d-f856-4ccd-8bf3-0a12af6912ea

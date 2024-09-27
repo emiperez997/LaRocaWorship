@@ -13,6 +13,7 @@ import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
+import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 
 @Controller('songs')
 export class SongsController {
@@ -29,8 +30,8 @@ export class SongsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.songsService.findOne(id);
+  findOne(@Param() params: FindByUuidParamDto) {
+    return this.songsService.findOne(params.id);
   }
 
   @Patch(':id')

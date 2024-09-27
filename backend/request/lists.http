@@ -1,0 +1,37 @@
+GET http://localhost:5000/api/lists/7fc83d34-c2be-44f5-a21f-ef40d3131ff0
+
+### 
+
+GET http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b/songs
+
+###
+
+POST http://localhost:5000/api/lists
+Content-Type: application/json
+
+{
+  "title": "Bautismo",
+  "userId": "7fc83d34-c2be-44f5-a21f-ef40d3131ff0"
+}
+
+### 
+
+POST http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b/2f5c5ccf-1f9e-404e-8373-60fe732df65f
+
+###
+
+
+PATCH http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b
+Content-Type: application/json
+
+{
+  "title": "Bautismo Nuevo"
+}
+
+###
+
+DELETE http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b
+
+###
+
+GET http://localhost:5000/api/lists/test/listSong

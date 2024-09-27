@@ -1,4 +1,9 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -6,6 +11,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class ListsService {
   constructor(private prisma: PrismaService) {}
+
+  // async findListSong() {
+  //   const ListSong = this.prisma.listSong.findMany();
+
+  //   return ListSong;
+  // }
 
   create(createListDto: CreateListDto) {
     try {
@@ -16,7 +27,7 @@ export class ListsService {
         },
       });
     } catch (error) {
-      throw new HttpException(`Error creating list`, 500);
+      throw new InternalServerErrorException();
     }
   }
 
@@ -28,7 +39,7 @@ export class ListsService {
     });
 
     if (!user) {
-      throw new HttpException(`User with id ${userId} not found`, 404);
+      throw new NotFoundException('User not found');
     }
 
     const lists = await this.prisma.list.findMany({
@@ -45,10 +56,17 @@ export class ListsService {
       where: {
         id: id,
       },
+      include: {
+        songs: {
+          include: {
+            song: true,
+          },
+        },
+      },
     });
 
     if (!list) {
-      throw new HttpException(`List with id ${id} not found`, 404);
+      throw new NotFoundException('List does not exists');
     }
 
     return list;
@@ -58,7 +76,7 @@ export class ListsService {
     const list = await this.findOne(listId);
 
     if (!list) {
-      throw new HttpException(`List with id ${listId} not found`, 404);
+      throw new NotFoundException('List does not exists');
     }
 
     const song = await this.prisma.song.findUnique({
@@ -68,18 +86,20 @@ export class ListsService {
     });
 
     if (!song) {
-      throw new HttpException(`Song with id ${songId} not found`, 404);
+      throw new NotFoundException('Song doest not exists');
     }
 
+    console.log(list);
+
     try {
-      const updatedList = await this.prisma.listSong.update({
+      const updatedList = await this.prisma.list.update({
         where: {
           id: listId,
         },
         data: {
-          song: {
-            connect: {
-              id: songId,
+          songs: {
+            create: {
+              songId: song.id,
             },
           },
         },
@@ -87,10 +107,9 @@ export class ListsService {
 
       return updatedList;
     } catch (error) {
-      throw new HttpException(
-        `Error adding song to list with id ${listId}`,
-        500,
-      );
+      console.log(error);
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -98,11 +117,11 @@ export class ListsService {
     const list = await this.findOne(id);
 
     if (!list) {
-      throw new HttpException(`List with id ${id} not found`, 404);
+      throw new NotFoundException('List does not exists');
     }
 
     try {
-      await this.prisma.list.update({
+      const updatedList = await this.prisma.list.update({
         where: {
           id: id,
         },
@@ -110,8 +129,10 @@ export class ListsService {
           title: updateListDto.title,
         },
       });
+
+      return updatedList;
     } catch (error) {
-      throw new HttpException(`Error updating list with id ${id}`, 500);
+      throw new InternalServerErrorException();
     }
   }
 
@@ -119,17 +140,19 @@ export class ListsService {
     const list = await this.findOne(id);
 
     if (!list) {
-      throw new HttpException(`List with id ${id} not found`, 404);
+      throw new NotFoundException('List does not exists');
     }
 
     try {
-      await this.prisma.list.delete({
+      const deletedList = await this.prisma.list.delete({
         where: {
           id: id,
         },
       });
+
+      return deletedList;
     } catch (error) {
-      throw new HttpException(`Error removing list with id ${id}`, 500);
+      throw new InternalServerErrorException();
     }
   }
 }

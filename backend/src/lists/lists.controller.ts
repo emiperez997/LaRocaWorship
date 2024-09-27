@@ -10,14 +10,21 @@ import {
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
+import { AddSongParamDto } from './dto/add-song-param.dto';
 
 @Controller('lists')
 export class ListsController {
   constructor(private readonly listsService: ListsService) {}
 
+  // @Get('test/listSong')
+  // findListSong() {
+  //   return this.listsService.findListSong();
+  // }
+
   @Get(':userId')
-  findAll(@Param('userId') userId: string) {
-    return this.listsService.findAll(userId);
+  findAll(@Param() params: FindByUuidParamDto) {
+    return this.listsService.findAll(params.userId);
   }
 
   @Get(':id/songs')
@@ -31,17 +38,20 @@ export class ListsController {
   }
 
   @Post(':id/:songId')
-  addSong(@Param('id') id: string, @Param('songId') songId: string) {
-    return this.listsService.addSong(id, songId);
+  addSong(@Param() params: AddSongParamDto) {
+    return this.listsService.addSong(params.id, params.songId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    return this.listsService.update(id, updateListDto);
+  update(
+    @Param() params: FindByUuidParamDto,
+    @Body() updateListDto: UpdateListDto,
+  ) {
+    return this.listsService.update(params.id, updateListDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.listsService.remove(id);
+  remove(@Param() params: FindByUuidParamDto) {
+    return this.listsService.remove(params.id);
   }
 }
