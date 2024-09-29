@@ -7,9 +7,11 @@ import { ListsModule } from './lists/lists.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     SongsModule,
     FavoritesModule,
     ListsModule,
