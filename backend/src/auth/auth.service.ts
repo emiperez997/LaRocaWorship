@@ -1,26 +1,71 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { PrismaService } from '@src/prisma/prisma.service';
+import { comparePasswords, hashPassword } from '@src/utils/hash';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  async login(loginDto: LoginDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: loginDto.email,
+      },
+    });
+
+    if (!user) throw new NotFoundException('User does not exists');
+
+    const isPasswordCorrect = await comparePasswords(
+      loginDto.password,
+      user.password,
+    );
+
+    if (!isPasswordCorrect) throw new UnauthorizedException();
+
+    const payload = { id: user.id, username: user.username };
+
+    const token = this.jwtService.sign(payload);
+
+    return { token };
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async register(registerDto: RegisterDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: registerDto.email,
+      },
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    if (user) throw new BadRequestException('User already exists');
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+    const hashedPassword = await hashPassword(registerDto.password);
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          username: registerDto.username,
+          firstName: registerDto.firstName,
+          lastName: registerDto.lastName,
+          email: registerDto.email,
+          password: hashedPassword,
+        },
+      });
+
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 }
