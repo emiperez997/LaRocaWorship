@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -6,17 +7,64 @@ import {
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { PrismaService } from '@src/prisma/prisma.service';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class FavoritesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all favorites`;
+  async findAll(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new NotFoundException('User does not exists');
+
+    try {
+      const favorites = await this.prisma.favorite.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          song: {
+            select: {
+              id: true,
+              title: true,
+              initialPhrase: true,
+            },
+          },
+          user: {
+            select: {
+              username: true,
+              email: true,
+            },
+          },
+        },
+      });
+
+      return favorites;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} favorite`;
+  async findOne(id: string) {
+    try {
+      const favorite = await this.prisma.favorite.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          song: true,
+        },
+      });
+
+      return favorite;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   async create(createFavoriteDto: CreateFavoriteDto) {
@@ -47,15 +95,66 @@ export class FavoritesService {
 
       return favorite;
     } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestException(error.message);
+      }
+
       throw new InternalServerErrorException();
     }
   }
 
-  update(id: string, updateFavoriteDto: UpdateFavoriteDto) {
-    return `This action updates a #${id} favorite`;
+  async update(id: string, updateFavoriteDto: UpdateFavoriteDto) {
+    const favorite = await this.prisma.favorite.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!favorite) {
+      throw new NotFoundException();
+    }
+
+    try {
+      const updatedFavorite = await this.prisma.favorite.update({
+        where: {
+          id: id,
+        },
+        data: {
+          trasposedSteps: updateFavoriteDto.trasposedSteps,
+        },
+      });
+
+      return updatedFavorite;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} favorite`;
+  async remove(id: string) {
+    const favorite = await this.prisma.favorite.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!favorite) {
+      throw new NotFoundException();
+    }
+
+    try {
+      await this.prisma.favorite.delete({
+        where: {
+          id: id,
+        },
+      });
+
+      return favorite;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestException(error.message);
+      }
+
+      throw new InternalServerErrorException();
+    }
   }
 }

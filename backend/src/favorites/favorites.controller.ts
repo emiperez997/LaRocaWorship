@@ -21,14 +21,9 @@ export class FavoritesController {
     return this.favoritesService.create(createFavoriteDto);
   }
 
-  @Get()
-  findAll() {
-    return this.favoritesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param() params: FindByUuidParamDto) {
-    return this.favoritesService.findOne(params.id);
+  @Get(':userId')
+  findAll(@Param() params: FindByUuidParamDto) {
+    return this.favoritesService.findAll(params.userId);
   }
 
   @Patch(':id')

@@ -53,6 +53,8 @@ model ListSong {
   list      List     @relation(fields: [listId], references: [id], onDelete: Cascade)
   song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+
+  @@unique([listId, songId])
 }
 
 model Favorite {
@@ -63,6 +65,8 @@ model Favorite {
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   song           Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
   createdAt      DateTime @default(now())
+
+  @@unique([songId, userId])
 }
 
 // Enum para Role
