@@ -15,9 +15,10 @@
       "BeardedBear.beardedicons"
       "esbenp.prettier-vscode"
       "Llam4u.nerdtree"
-      "Prisma.prisma"
+      "Prisma.Prisma"
       "teabyii.ayu"
       "humao.rest-client"
+      "Supermaven.supermaven"
     ];
 
     previews = {

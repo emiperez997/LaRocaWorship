@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { PrismaService } from '@src/prisma/prisma.service';
 
 @Injectable()
 export class FavoritesService {
-  create(createFavoriteDto: CreateFavoriteDto) {
-    return 'This action adds a new favorite';
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
     return `This action returns all favorites`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} favorite`;
   }
 
-  update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
+  async create(createFavoriteDto: CreateFavoriteDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: createFavoriteDto.userId,
+      },
+    });
+
+    if (!user) throw new NotFoundException('User does not exists');
+
+    const song = await this.prisma.song.findUnique({
+      where: {
+        id: createFavoriteDto.songId,
+      },
+    });
+
+    if (!song) throw new NotFoundException('Song does not exists');
+
+    try {
+      const favorite = await this.prisma.favorite.create({
+        data: {
+          userId: createFavoriteDto.userId,
+          songId: createFavoriteDto.songId,
+          trasposedSteps: createFavoriteDto.trasposedSteps,
+        },
+      });
+
+      return favorite;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  update(id: string, updateFavoriteDto: UpdateFavoriteDto) {
     return `This action updates a #${id} favorite`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} favorite`;
   }
 }

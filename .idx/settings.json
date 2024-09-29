@@ -81,11 +81,7 @@
 
   "editor.fontLigatures": true,
   "explorer.compactFolders": false,
-  "workbench.editorAssociations": [
-    {
-      "*.md": "vscode.markdown.preview.editor"
-    }
-  ],
+  
   "workbench.preferredDarkColorTheme": "Ayu Mirage",
   "workbench.iconTheme": "bearded-icons",
   "symbols.hidesExplorerArrows": false

@@ -83,6 +83,12 @@ export class SongsService {
       throw new NotFoundException();
     }
 
+    if (song.status === updateSongDto.status) {
+      throw new BadRequestException(
+        'Status cannot be changed to the same value',
+      );
+    }
+
     try {
       const updatedSong = await this.prisma.song.update({
         where: {
