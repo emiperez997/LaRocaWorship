@@ -83,8 +83,8 @@ enum Status {
 - [x] Entity Song
 - [x] Entity User
 - [x] Entity List
-- [-] Entity Favorite
-- [ ] Entity Auth
+- [x] Entity Favorite
+- [x] Entity Auth
 
 **Features**
 
@@ -98,3 +98,4 @@ enum Status {
 - [x] `settings.json` for `vscode/idx`
 - [x] `.env.example` for environment variables
 - [ ] Testing with `jest`
+

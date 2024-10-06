@@ -42,6 +42,30 @@ export class UsersService {
     return user;
   }
 
+  async findByUsername(username: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { username },
+    });
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return user;
+  }
+
+  async findByEmail(email: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return user;
+  }
+
   async create(createUserDto: CreateUserDto) {
     const user = await this.prisma.user.findMany({
       where: {
