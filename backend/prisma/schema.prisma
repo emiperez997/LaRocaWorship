@@ -15,11 +15,12 @@ model User {
   lastName  String
   email     String     @unique
   password  String
-  role      Role       @default(user)
+  role      Role       @default(USER)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   lists     List[] // Relación con List
   favorites Favorite[] // Relación con Favorite
+  Song      Song[]
 }
 
 model List {
@@ -39,9 +40,11 @@ model Song {
   initialPhrase String
   artist        String
   categories    String[]
-  status        Status     @default(pending)
+  status        Status     @default(PENDING)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  userId        String
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   lists         ListSong[] // Relación con ListSong
   favorites     Favorite[] // Relación con Favorite
 }
@@ -71,12 +74,12 @@ model Favorite {
 
 // Enum para Role
 enum Role {
-  user
-  admin
+  USER
+  ADMIN
 }
 
 enum Status {
-  pending
-  approved
-  rejected
+  PENDING
+  APPROVED
+  REJECTED
 }

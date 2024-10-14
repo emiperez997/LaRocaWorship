@@ -5,11 +5,24 @@ import {
   Body,
   UseGuards,
   Request,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { AuthGuard } from './guards/auth.guard';
+import { Roles } from './decorators/roles.decorator';
+import { Role } from '@prisma/client';
+import { RoleGuard } from './guards/role.guard';
+import { Auth } from './decorators/auth.decorator';
+
+interface RequestWithUser extends Request {
+  user: {
+    id: string;
+    username: string;
+    role: string;
+  };
+}
 
 @Controller('auth')
 export class AuthController {
@@ -26,8 +39,14 @@ export class AuthController {
   }
 
   @Get('profile')
-  @UseGuards(AuthGuard)
-  profile(@Request() req: Request) {
-    return req['user'];
+  @Auth(Role.admin, Role.user)
+  profile(@Request() req: RequestWithUser) {
+    if (req.user.role !== 'admin') {
+      throw new UnauthorizedException(
+        "You don't have permission to access this route",
+      );
+    }
+
+    return this.authService.profile(req.user.username, req.user.role);
   }
 }

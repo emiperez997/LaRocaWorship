@@ -15,7 +15,6 @@ import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 import { AuthGuard } from '@src/auth/guards/auth.guard';
 
 @Controller('users')
-@UseGuards(AuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

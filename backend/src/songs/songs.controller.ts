@@ -14,12 +14,15 @@ import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
 import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
+import { Auth } from '@src/auth/decorators/auth.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('songs')
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
   @Post()
+  @Auth(Role.user, Role.admin)
   create(@Body(ValidationPipe) createSongDto: CreateSongDto) {
     return this.songsService.create(createSongDto);
   }
@@ -30,6 +33,7 @@ export class SongsController {
   }
 
   @Get(':id')
+  @Auth(Role.admin)
   findOne(@Param() params: FindByUuidParamDto) {
     return this.songsService.findOne(params.id);
   }
