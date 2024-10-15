@@ -24,6 +24,11 @@ export class SongsService {
         initialPhrase: createSongDto.initialPhrase,
         artist: createSongDto.artist,
         categories: createSongDto.categories,
+        user: {
+          connect: {
+            id: createSongDto.userId,
+          },
+        },
       },
     });
   }

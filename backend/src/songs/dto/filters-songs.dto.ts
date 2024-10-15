@@ -18,7 +18,7 @@ export class FiltersSongsDto {
   @IsOptional()
   category: string;
 
-  @IsEnum([Status.pending, Status.approved, Status.rejected])
+  @IsEnum([Status.PENDING, Status.APPROVED, Status.REJECTED])
   @IsOptional()
   status: Status;
 }

@@ -1,5 +1,5 @@
 import { Status } from '@prisma/client';
-import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateSongDto {
   @IsString()
@@ -18,7 +18,10 @@ export class CreateSongDto {
   @IsArray()
   categories: string[];
 
-  @IsEnum([Status.pending, Status.approved, Status.rejected])
+  @IsEnum([Status.PENDING, Status.APPROVED, Status.REJECTED])
   @IsOptional()
   status?: Status;
+
+  @IsUUID()
+  userId: string;
 }

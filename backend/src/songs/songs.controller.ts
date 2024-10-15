@@ -22,7 +22,7 @@ export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
   @Post()
-  @Auth(Role.user, Role.admin)
+  @Auth(Role.USER, Role.ADMIN)
   create(@Body(ValidationPipe) createSongDto: CreateSongDto) {
     return this.songsService.create(createSongDto);
   }
@@ -33,7 +33,7 @@ export class SongsController {
   }
 
   @Get(':id')
-  @Auth(Role.admin)
+  @Auth(Role.ADMIN)
   findOne(@Param() params: FindByUuidParamDto) {
     return this.songsService.findOne(params.id);
   }

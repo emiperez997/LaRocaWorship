@@ -3,6 +3,8 @@
 
   packages = [
     pkgs.openssl.dev
+    pkgs.nodejs_20
+    pkgs.bun
   ];
 
   env = { };
@@ -12,6 +14,7 @@
   idx = {
 
     extensions = [
+      "vscodevim.vim"
       "BeardedBear.beardedicons"
       "esbenp.prettier-vscode"
       "Llam4u.nerdtree"

@@ -3,17 +3,13 @@ import {
   Get,
   Post,
   Body,
-  UseGuards,
   Request,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { AuthGuard } from './guards/auth.guard';
-import { Roles } from './decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { RoleGuard } from './guards/role.guard';
 import { Auth } from './decorators/auth.decorator';
 
 interface RequestWithUser extends Request {
@@ -39,9 +35,9 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Auth(Role.admin, Role.user)
+  @Auth(Role.ADMIN, Role.ADMIN)
   profile(@Request() req: RequestWithUser) {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'ADMIN') {
       throw new UnauthorizedException(
         "You don't have permission to access this route",
       );

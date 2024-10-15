@@ -1,10 +1,12 @@
+### GET All Users 
+
 GET http://localhost:5000/api/users
 
-### 
+### GET User By Id
 
 GET http://localhost:5000/api/users/7fc83d34-c2be-44f5-a21f-ef40d3131ff0
 
-###
+### POST User 1
 
 POST http://localhost:5000/api/users
 Content-Type: application/json
@@ -17,10 +19,27 @@ Content-Type: application/json
     "password": "12345678"
 }
 
+### POST User 2
+
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+    "username": "emiperez",
+    "firstName": "Emiliano",
+    "lastName": "Perez",
+    "email": "emiperez@gmail.com",
+    "password": "12345678"
+}
+
 ###
 
-PATCH http://localhost:5000/api/users
+PATCH http://localhost:5000/api/users/03b78bc9-1a91-4a72-8227-e2533f2bbd74
 Content-Type: application/json
+
+{
+    "role": "ADMIN"
+}
 
 ###
 
