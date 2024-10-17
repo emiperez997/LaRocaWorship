@@ -1,8 +1,10 @@
-import { IsNumber, IsUUID } from "class-validator";
+import { Optional } from '@nestjs/common';
+import { IsNumber, IsUUID } from 'class-validator';
 
 export class CreateFavoriteDto {
   @IsUUID()
-  userId: string;
+  @Optional()
+  userId?: string;
 
   @IsUUID()
   songId: string;

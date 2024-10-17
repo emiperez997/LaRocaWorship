@@ -1,13 +1,16 @@
+### GET Songs
+
 GET http://localhost:5000/api/songs
 
-###
+### GET Song by id
 
-GET http://localhost:5000/api/songs/dasda
+GET http://localhost:5000/api/songs/6079475a-7de4-4720-b8db-383e9c101926
 
-###
+### POST Song
  
 POST http://localhost:5000/api/songs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZjQ4Mzg3LThkMzAtNDBmNS04NzVmLTU4MTJhOGNiMzRlMSIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTEyMzE2MCwiZXhwIjoxNzI5MTI0OTYwfQ.G868nHVwpYispMHrxpm-McDH5T4ZrBCxGLMevD4_tCA
 
 {
     "title": "Cantando Santo",
@@ -17,15 +20,17 @@ Content-Type: application/json
     "categories": ["Adoración"]
 }
 
-###
+### PATCH Song
 
-PATCH  http://localhost:5000/api/songs/2f5c5ccf-1f9e-404e-8373-60fe732df65f
+PATCH  http://localhost:5000/api/songs/6079475a-7de4-4720-b8db-383e9c101926/status
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkYTQ2Yjc4LTU4MjgtNDY1Ni05YTE2LTQwZGNkOGQwYTI0ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTExODc5MSwiZXhwIjoxNzI5MTIwNTkxfQ.H8AUtNt9dejDn0QXEqgJGr2Yt8TJ2PDaYK-be1_y-UM
 
 {
   "status": "approved"
 }
 
-###
+### DELETE Song
 
 DELETE http://localhost:5000/api/songs/9414ff5d-f856-4ccd-8bf3-0a12af6912ea
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkYTQ2Yjc4LTU4MjgtNDY1Ni05YTE2LTQwZGNkOGQwYTI0ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTExODc5MSwiZXhwIjoxNzI5MTIwNTkxfQ.H8AUtNt9dejDn0QXEqgJGr2Yt8TJ2PDaYK-be1_y-UM

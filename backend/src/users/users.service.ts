@@ -33,6 +33,16 @@ export class UsersService {
   async findOne(id: string) {
     const user = await this.prisma.user.findUnique({
       where: { id },
+      select: {
+        id: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     if (!user) {
@@ -103,6 +113,8 @@ export class UsersService {
         },
       });
     } catch (error) {
+      console.log(error);
+
       throw new InternalServerErrorException();
     }
   }

@@ -5,6 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
+import { PrismaClientExceptionFilter } from './common/filters/ExceptionFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -19,6 +20,8 @@ async function bootstrap() {
       transform: true, // Transforma los datos de entrada
     }),
   );
+
+  app.useGlobalFilters(new PrismaClientExceptionFilter());
 
   app.setGlobalPrefix('api');
 

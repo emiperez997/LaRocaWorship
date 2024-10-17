@@ -35,20 +35,12 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    const user = await this.usersService.findByEmail(registerDto.email);
-
-    if (user) throw new BadRequestException('User already exists');
-
-    const hashedPassword = await hashPassword(registerDto.password);
-
-    registerDto.password = hashedPassword;
-
     try {
       const user = await this.usersService.create(registerDto);
 
       return user;
     } catch (error) {
-      throw new InternalServerErrorException();
+      return error;
     }
   }
 

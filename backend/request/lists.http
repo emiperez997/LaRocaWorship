@@ -1,17 +1,19 @@
-GET http://localhost:5000/api/lists/7fc83d34-c2be-44f5-a21f-ef40d3131ff0
+GET http://localhost:5000/api/lists
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkYTQ2Yjc4LTU4MjgtNDY1Ni05YTE2LTQwZGNkOGQwYTI0ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTExODc5MSwiZXhwIjoxNzI5MTIwNTkxfQ.H8AUtNt9dejDn0QXEqgJGr2Yt8TJ2PDaYK-be1_y-UM
 
 ### 
 
 GET http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkYTQ2Yjc4LTU4MjgtNDY1Ni05YTE2LTQwZGNkOGQwYTI0ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTExODc5MSwiZXhwIjoxNzI5MTIwNTkxfQ.H8AUtNt9dejDn0QXEqgJGr2Yt8TJ2PDaYK-be1_y-UM
 
 ###
 
 POST http://localhost:5000/api/lists
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZjQ4Mzg3LThkMzAtNDBmNS04NzVmLTU4MTJhOGNiMzRlMSIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MjkxMjMzMjgsImV4cCI6MTcyOTEyNTEyOH0.Sifx9JhHAXfkEJAshqfLDz4Zfb2xg3mQX0nmX55ohWg
 
 {
-  "title": "Bautismo",
-  "userId": "7fc83d34-c2be-44f5-a21f-ef40d3131ff0"
+  "title": "Bautismo 2" 
 }
 
 ### 

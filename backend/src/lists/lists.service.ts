@@ -20,13 +20,20 @@ export class ListsService {
 
   create(createListDto: CreateListDto) {
     try {
-      return this.prisma.list.create({
+      const list = this.prisma.list.create({
         data: {
           title: createListDto.title,
-          userId: createListDto.userId,
+          user: {
+            connect: {
+              id: createListDto.userId,
+            },
+          },
         },
       });
+      return list;
     } catch (error) {
+      console.log(error);
+
       throw new InternalServerErrorException();
     }
   }

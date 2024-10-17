@@ -18,10 +18,7 @@ export class CreateSongDto {
   @IsArray()
   categories: string[];
 
-  @IsEnum([Status.PENDING, Status.APPROVED, Status.REJECTED])
-  @IsOptional()
-  status?: Status;
-
   @IsUUID()
-  userId: string;
+  @IsOptional()
+  userId?: string;
 }

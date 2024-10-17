@@ -8,6 +8,7 @@ import {
   Delete,
   ValidationPipe,
   Query,
+  Req,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
@@ -15,7 +16,8 @@ import { UpdateSongDto } from './dto/update-song.dto';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
 import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 import { Auth } from '@src/auth/decorators/auth.decorator';
-import { Role } from '@prisma/client';
+import { Role, Status } from '@prisma/client';
+import { RequestWithUser } from '@src/common/dto/request-with-user';
 
 @Controller('songs')
 export class SongsController {
@@ -23,7 +25,12 @@ export class SongsController {
 
   @Post()
   @Auth(Role.USER, Role.ADMIN)
-  create(@Body(ValidationPipe) createSongDto: CreateSongDto) {
+  create(
+    @Body(ValidationPipe) createSongDto: CreateSongDto,
+    @Req() req: RequestWithUser,
+  ) {
+    createSongDto.userId = req.user.id;
+
     return this.songsService.create(createSongDto);
   }
 
@@ -33,7 +40,6 @@ export class SongsController {
   }
 
   @Get(':id')
-  @Auth(Role.ADMIN)
   findOne(@Param() params: FindByUuidParamDto) {
     return this.songsService.findOne(params.id);
   }
@@ -46,7 +52,14 @@ export class SongsController {
     return this.songsService.update(id, updateSongDto);
   }
 
+  @Patch(':id/status')
+  @Auth(Role.ADMIN)
+  updateStatus(@Param('id') id: string, @Body() status: Status) {
+    return this.songsService.updateStatus(id, status);
+  }
+
   @Delete(':id')
+  @Auth(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.songsService.remove(id);
   }

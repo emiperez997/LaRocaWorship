@@ -1,0 +1,40 @@
+### POST Login
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "emiperez@gmail.com",
+    "password": "12345678"
+}
+
+### GET Profile
+
+GET http://localhost:5000/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZjQ4Mzg3LThkMzAtNDBmNS04NzVmLTU4MTJhOGNiMzRlMSIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTEyMzE2MCwiZXhwIjoxNzI5MTI0OTYwfQ.G868nHVwpYispMHrxpm-McDH5T4ZrBCxGLMevD4_tCA
+
+### POST Register
+
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "cintiak",
+    "firstName": "Cintia",
+    "lastName": "Kromplewski",
+    "email": "cintia@gmail.com",
+    "password": "12345678"
+}
+
+### POST Register 2
+
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "emiperez",
+    "firstName": "Emiliano",
+    "lastName": "Perez",
+    "email": "emiperez@gmail.com",
+    "password": "12345678"
+}

@@ -11,6 +11,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Song } from './entities/song.entity';
 import { PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
+import { Status } from '@prisma/client';
 
 @Injectable()
 export class SongsService {
@@ -72,6 +73,14 @@ export class SongsService {
       where: {
         id,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
     });
 
     if (!song) {
@@ -115,6 +124,35 @@ export class SongsService {
         throw new BadRequestException(error.message);
       }
 
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async updateStatus(id: string, status: Status): Promise<Song> {
+    const song = await this.findOne(id);
+
+    if (!song) {
+      throw new NotFoundException();
+    }
+
+    if (song.status === status) {
+      throw new BadRequestException(
+        'Status cannot be changed to the same value',
+      );
+    }
+
+    try {
+      const updatedSong = await this.prisma.song.update({
+        where: {
+          id,
+        },
+        data: {
+          status,
+        },
+      });
+
+      return updatedSong;
+    } catch (error) {
       throw new InternalServerErrorException();
     }
   }
