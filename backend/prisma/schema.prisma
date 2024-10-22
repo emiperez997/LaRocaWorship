@@ -77,7 +77,7 @@ model Favorite {
 
 model Artist {
   id        String   @id @default(uuid())
-  name      String
+  name      String   @unique
   songs     Song[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,7 +85,7 @@ model Artist {
 
 model Category {
   id        String         @id @default(uuid())
-  name      String
+  name      String         @unique
   songs     SongCategory[]
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt

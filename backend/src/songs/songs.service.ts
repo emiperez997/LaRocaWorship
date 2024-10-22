@@ -25,8 +25,25 @@ export class SongsService {
         title: createSongDto.title,
         lyrics: createSongDto.lyrics,
         initialPhrase: createSongDto.initialPhrase,
-        artist: createSongDto.artist,
-        categories: createSongDto.categories,
+        artist: {
+          connectOrCreate: {
+            where: {
+              name: createSongDto.artist,
+            },
+            create: {
+              name: createSongDto.artist,
+            },
+          },
+        },
+        categories: {
+          create: createSongDto.categories.map((category) => ({
+            category: {
+              connect: {
+                name: category,
+              },
+            },
+          })),
+        },
         user: {
           connect: {
             id: createSongDto.userId,
@@ -122,8 +139,25 @@ export class SongsService {
           title: updateSongDto.title ?? song.title,
           lyrics: updateSongDto.lyrics ?? song.lyrics,
           initialPhrase: updateSongDto.initialPhrase ?? song.initialPhrase,
-          artist: updateSongDto.artist ?? song.artist,
-          categories: updateSongDto.categories ?? song.categories,
+          artist: {
+            connectOrCreate: {
+              where: {
+                name: updateSongDto.artist ?? song.artist.name,
+              },
+              create: {
+                name: updateSongDto.artist ?? song.artist.name,
+              },
+            },
+          },
+          categories: {
+            create: updateSongDto.categories.map((category) => ({
+              category: {
+                connect: {
+                  name: category,
+                },
+              },
+            })),
+          },
         },
       });
 
