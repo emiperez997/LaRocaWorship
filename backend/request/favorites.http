@@ -1,0 +1,35 @@
+### GET Favorites
+
+GET http://localhost:5000/api/favorites
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
+
+### GET Favorite
+
+GET http://localhost:5000/api/favorites/f5512346-5b90-4b4b-bf86-8125a90e9468
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
+
+### POST Favorite
+
+POST http://localhost:5000/api/favorites
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU3MzI4LCJleHAiOjE3Mjk1NTkxMjh9.vbshy0Oohf5PfxsomHqVM7zEgHSfdV3iWqiGEdXwzaI
+Content-Type: application/json
+
+{
+  "songId": "8eada754-08a8-4c8d-84f5-30750c4a3255",
+  "trasposedSteps": 1
+}
+
+### PATCH Favorite
+
+PATCH http://localhost:5000/api/favorites/f5512346-5b90-4b4b-bf86-8125a90e9468
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
+Content-Type: application/json
+
+{
+  "trasposedSteps": 3
+}
+
+### DELETE Favorite
+
+DELETE http://localhost:5000/api/favorites/f5512346-5b90-4b4b-bf86-8125a90e9468
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y

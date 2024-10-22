@@ -18,6 +18,8 @@ import { Auth } from '@src/auth/decorators/auth.decorator';
 import { Role } from '@prisma/client';
 import { RequestWithUser } from '@src/common/dto/request-with-user';
 import { PrismaClientExceptionFilter } from '@src/common/filters/ExceptionFilter';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
+import { ActiveUser } from '@src/common/decorators/active-user.decorator';
 
 @Controller('lists')
 export class ListsController {
@@ -30,8 +32,11 @@ export class ListsController {
 
   @Get()
   @Auth(Role.USER)
-  findAll(@Param() params: FindByUuidParamDto, @Req() req: RequestWithUser) {
-    return this.listsService.findAll(req.user.id);
+  findAll(
+    @Param() params: FindByUuidParamDto,
+    @ActiveUser() user: IUserActive,
+  ) {
+    return this.listsService.findAll(user.id);
   }
 
   @Get(':id/songs')
@@ -42,26 +47,32 @@ export class ListsController {
 
   @Post()
   @Auth(Role.USER)
-  create(@Body() createListDto: CreateListDto, @Req() req: RequestWithUser) {
-    createListDto.userId = req.user.id;
-    return this.listsService.create(createListDto);
+  create(
+    @Body() createListDto: CreateListDto,
+    @ActiveUser() user: IUserActive,
+  ) {
+    return this.listsService.create(createListDto, user);
   }
 
   @Post(':id/:songId')
-  addSong(@Param() params: AddSongParamDto) {
-    return this.listsService.addSong(params.id, params.songId);
+  @Auth(Role.USER)
+  addSong(@Param() params: AddSongParamDto, @ActiveUser() user: IUserActive) {
+    return this.listsService.addSong(params.id, params.songId, user);
   }
 
   @Patch(':id')
+  @Auth(Role.USER)
   update(
     @Param() params: FindByUuidParamDto,
     @Body() updateListDto: UpdateListDto,
+    @ActiveUser() user: IUserActive,
   ) {
-    return this.listsService.update(params.id, updateListDto);
+    return this.listsService.update(params.id, updateListDto, user);
   }
 
   @Delete(':id')
-  remove(@Param() params: FindByUuidParamDto) {
-    return this.listsService.remove(params.id);
+  @Auth(Role.USER)
+  remove(@Param() params: FindByUuidParamDto, @ActiveUser() user: IUserActive) {
+    return this.listsService.remove(params.id, user);
   }
 }

@@ -20,8 +20,6 @@ export class PrismaClientExceptionFilter implements ExceptionFilter {
         ? 'Unique constraint failed on the fields.'
         : 'Database error';
 
-    console.log(message);
-
     response.status(status).send({
       statusCode: status,
       message,

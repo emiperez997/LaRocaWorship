@@ -5,6 +5,8 @@ import { RegisterDto } from './dto/register.dto';
 import { Role } from '@prisma/client';
 import { Auth } from './decorators/auth.decorator';
 import { RequestWithUser } from '@src/common/dto/request-with-user';
+import { ActiveUser } from '@src/common/decorators/active-user.decorator';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -22,13 +24,13 @@ export class AuthController {
 
   @Get('profile')
   @Auth(Role.ADMIN, Role.USER)
-  profile(@Request() req: RequestWithUser) {
+  profile(@ActiveUser() user: IUserActive) {
     // if (req.user.role !== 'ADMIN') {
     //   throw new UnauthorizedException(
     //     "You don't have permission to access this route",
     //   );
     // }
 
-    return this.authService.profile(req.user.username, req.user.role);
+    return this.authService.profile(user);
   }
 }

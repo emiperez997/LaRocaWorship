@@ -9,6 +9,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '@src/users/users.service';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
 
 @Injectable()
 export class AuthService {
@@ -44,9 +45,9 @@ export class AuthService {
     }
   }
 
-  async profile(username: string, role: string) {
+  async profile(user: IUserActive) {
     try {
-      return await this.usersService.findByUsername(username);
+      return await this.usersService.findByUsername(user.username);
     } catch (error) {
       throw new InternalServerErrorException();
     }

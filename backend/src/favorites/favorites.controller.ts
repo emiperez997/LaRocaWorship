@@ -14,7 +14,8 @@ import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 import { Auth } from '@src/auth/decorators/auth.decorator';
 import { Role } from '@prisma/client';
-import { RequestWithUser } from '@src/common/dto/request-with-user';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
+import { ActiveUser } from '@src/common/decorators/active-user.decorator';
 
 @Controller('favorites')
 export class FavoritesController {
@@ -24,28 +25,39 @@ export class FavoritesController {
   @Auth(Role.USER)
   create(
     @Body() createFavoriteDto: CreateFavoriteDto,
-    @Req() req: RequestWithUser,
+    @ActiveUser() user: IUserActive,
   ) {
-    createFavoriteDto.userId = req.user.id;
-
-    return this.favoritesService.create(createFavoriteDto);
+    return this.favoritesService.create(createFavoriteDto, user);
   }
 
   @Get()
-  findAll(@Param() params: FindByUuidParamDto) {
-    return this.favoritesService.findAll(params.userId);
+  @Auth(Role.USER)
+  findAll(@ActiveUser() user: IUserActive) {
+    return this.favoritesService.findAll(user.id);
+  }
+
+  @Get(':id')
+  @Auth(Role.USER)
+  findOne(
+    @Param() params: FindByUuidParamDto,
+    @ActiveUser() user: IUserActive,
+  ) {
+    return this.favoritesService.findOne(params.id, user);
   }
 
   @Patch(':id')
+  @Auth(Role.USER)
   update(
     @Param() params: FindByUuidParamDto,
     @Body() updateFavoriteDto: UpdateFavoriteDto,
+    @ActiveUser() user: IUserActive,
   ) {
-    return this.favoritesService.update(params.id, updateFavoriteDto);
+    return this.favoritesService.update(params.id, updateFavoriteDto, user);
   }
 
   @Delete(':id')
-  remove(@Param() params: FindByUuidParamDto) {
-    return this.favoritesService.remove(params.id);
+  @Auth(Role.USER)
+  remove(@Param() params: FindByUuidParamDto, @ActiveUser() user: IUserActive) {
+    return this.favoritesService.remove(params.id, user);
   }
 }

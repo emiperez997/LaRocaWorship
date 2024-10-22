@@ -1,4 +1,5 @@
 import {
+  ForbiddenException,
   HttpException,
   Injectable,
   InternalServerErrorException,
@@ -7,6 +8,7 @@ import {
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
 
 @Injectable()
 export class ListsService {
@@ -18,24 +20,18 @@ export class ListsService {
   //   return ListSong;
   // }
 
-  create(createListDto: CreateListDto) {
-    try {
-      const list = this.prisma.list.create({
-        data: {
-          title: createListDto.title,
-          user: {
-            connect: {
-              id: createListDto.userId,
-            },
+  async create(createListDto: CreateListDto, user: IUserActive) {
+    const list = await this.prisma.list.create({
+      data: {
+        title: createListDto.title,
+        user: {
+          connect: {
+            id: user.id,
           },
         },
-      });
-      return list;
-    } catch (error) {
-      console.log(error);
-
-      throw new InternalServerErrorException();
-    }
+      },
+    });
+    return list;
   }
 
   async findAll(userId: string) {
@@ -53,6 +49,13 @@ export class ListsService {
       where: {
         userId: userId,
       },
+      include: {
+        _count: {
+          select: {
+            songs: true,
+          },
+        },
+      },
     });
 
     return lists;
@@ -66,7 +69,15 @@ export class ListsService {
       include: {
         songs: {
           include: {
-            song: true,
+            list: false,
+            song: {
+              select: {
+                id: true,
+                title: true,
+                artist: true,
+                initialPhrase: true,
+              },
+            },
           },
         },
       },
@@ -79,11 +90,15 @@ export class ListsService {
     return list;
   }
 
-  async addSong(listId: string, songId: string) {
+  async addSong(listId: string, songId: string, user: IUserActive) {
     const list = await this.findOne(listId);
 
     if (!list) {
       throw new NotFoundException('List does not exists');
+    }
+
+    if (list.userId !== user.id) {
+      throw new ForbiddenException();
     }
 
     const song = await this.prisma.song.findUnique({
@@ -96,35 +111,31 @@ export class ListsService {
       throw new NotFoundException('Song doest not exists');
     }
 
-    console.log(list);
-
-    try {
-      const updatedList = await this.prisma.list.update({
-        where: {
-          id: listId,
-        },
-        data: {
-          songs: {
-            create: {
-              songId: song.id,
-            },
+    const updatedList = await this.prisma.list.update({
+      where: {
+        id: listId,
+      },
+      data: {
+        songs: {
+          create: {
+            songId: song.id,
           },
         },
-      });
+      },
+    });
 
-      return updatedList;
-    } catch (error) {
-      console.log(error);
-
-      throw new InternalServerErrorException();
-    }
+    return updatedList;
   }
 
-  async update(id: string, updateListDto: UpdateListDto) {
+  async update(id: string, updateListDto: UpdateListDto, user: IUserActive) {
     const list = await this.findOne(id);
 
     if (!list) {
       throw new NotFoundException('List does not exists');
+    }
+
+    if (list.userId !== user.id) {
+      throw new ForbiddenException();
     }
 
     try {
@@ -143,11 +154,15 @@ export class ListsService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, user: IUserActive) {
     const list = await this.findOne(id);
 
     if (!list) {
       throw new NotFoundException('List does not exists');
+    }
+
+    if (list.userId !== user.id) {
+      throw new ForbiddenException();
     }
 
     try {

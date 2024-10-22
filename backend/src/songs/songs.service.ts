@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   HttpException,
   Injectable,
   InternalServerErrorException,
@@ -12,6 +13,7 @@ import { Song } from './entities/song.entity';
 import { PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
 import { Status } from '@prisma/client';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
 
 @Injectable()
 export class SongsService {
@@ -90,17 +92,15 @@ export class SongsService {
     return song;
   }
 
-  async update(id: string, updateSongDto: UpdateSongDto) {
+  async update(id: string, updateSongDto: UpdateSongDto, user: IUserActive) {
     const song = await this.findOne(id);
 
     if (!song) {
       throw new NotFoundException();
     }
 
-    if (song.status === updateSongDto.status) {
-      throw new BadRequestException(
-        'Status cannot be changed to the same value',
-      );
+    if (song.userId !== user.id) {
+      throw new ForbiddenException();
     }
 
     try {
@@ -114,7 +114,6 @@ export class SongsService {
           initialPhrase: updateSongDto.initialPhrase ?? song.initialPhrase,
           artist: updateSongDto.artist ?? song.artist,
           categories: updateSongDto.categories ?? song.categories,
-          status: updateSongDto.status ?? song.status,
         },
       });
 

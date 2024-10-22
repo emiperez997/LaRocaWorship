@@ -13,8 +13,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 import { AuthGuard } from '@src/auth/guards/auth.guard';
+import { Auth } from '@src/auth/decorators/auth.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('users')
+@Auth(Role.ADMIN)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

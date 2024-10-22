@@ -18,6 +18,8 @@ import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 import { Auth } from '@src/auth/decorators/auth.decorator';
 import { Role, Status } from '@prisma/client';
 import { RequestWithUser } from '@src/common/dto/request-with-user';
+import { ActiveUser } from '@src/common/decorators/active-user.decorator';
+import { IUserActive } from '@src/common/interfaces/user-active.interface';
 
 @Controller('songs')
 export class SongsController {
@@ -27,9 +29,9 @@ export class SongsController {
   @Auth(Role.USER, Role.ADMIN)
   create(
     @Body(ValidationPipe) createSongDto: CreateSongDto,
-    @Req() req: RequestWithUser,
+    @ActiveUser() user: IUserActive,
   ) {
-    createSongDto.userId = req.user.id;
+    createSongDto.userId = user.id;
 
     return this.songsService.create(createSongDto);
   }
@@ -48,8 +50,9 @@ export class SongsController {
   update(
     @Param('id') id: string,
     @Body(ValidationPipe) updateSongDto: UpdateSongDto,
+    @ActiveUser() user: IUserActive,
   ) {
-    return this.songsService.update(id, updateSongDto);
+    return this.songsService.update(id, updateSongDto, user);
   }
 
   @Patch(':id/status')

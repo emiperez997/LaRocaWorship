@@ -1,30 +1,35 @@
+### GET Lists
+
 GET http://localhost:5000/api/lists
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkYTQ2Yjc4LTU4MjgtNDY1Ni05YTE2LTQwZGNkOGQwYTI0ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTExODc5MSwiZXhwIjoxNzI5MTIwNTkxfQ.H8AUtNt9dejDn0QXEqgJGr2Yt8TJ2PDaYK-be1_y-UM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
 
-### 
+### GET List
 
-GET http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkYTQ2Yjc4LTU4MjgtNDY1Ni05YTE2LTQwZGNkOGQwYTI0ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTExODc5MSwiZXhwIjoxNzI5MTIwNTkxfQ.H8AUtNt9dejDn0QXEqgJGr2Yt8TJ2PDaYK-be1_y-UM
+GET http://localhost:5000/api/lists/256232c0-d285-49cc-9cce-900a965dbb37/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
 
-###
+### POST List
 
 POST http://localhost:5000/api/lists
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZjQ4Mzg3LThkMzAtNDBmNS04NzVmLTU4MTJhOGNiMzRlMSIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MjkxMjMzMjgsImV4cCI6MTcyOTEyNTEyOH0.Sifx9JhHAXfkEJAshqfLDz4Zfb2xg3mQX0nmX55ohWg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
 
 {
-  "title": "Bautismo 2" 
+  "title": "Bautismo" 
 }
 
-### 
+### POST List Song
 
-POST http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b/2f5c5ccf-1f9e-404e-8373-60fe732df65f
+POST http://localhost:5000/api/lists/256232c0-d285-49cc-9cce-900a965dbb37/8eada754-08a8-4c8d-84f5-30750c4a3255
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU5Mjg2LCJleHAiOjE3Mjk1NjEwODZ9.0i7heIJsFACmm8ICbXf8lYqCioWlznSOTSUWKdYPq5Y
+
 
 ###
 
 
-PATCH http://localhost:5000/api/lists/86272e48-dff4-44fa-b23b-66a7bd1e3d3b
+PATCH http://localhost:5000/api/lists/0ec1cbe2-35c2-4a71-a02d-6a270ef7aa1c
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5N2Q1OTkyLTVlMGItNGEyNy1iMjllLTVlODVjNGU0ZGUwYiIsInVzZXJuYW1lIjoiY2ludGlhayIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzI5NTU3MzI4LCJleHAiOjE3Mjk1NTkxMjh9.vbshy0Oohf5PfxsomHqVM7zEgHSfdV3iWqiGEdXwzaI
 
 {
   "title": "Bautismo Nuevo"

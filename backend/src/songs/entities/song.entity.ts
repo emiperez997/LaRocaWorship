@@ -1,9 +1,11 @@
 import { Favorite } from 'src/favorites/entities/favorite.entity';
 import { List } from 'src/lists/entities/list.entity';
-import { Status } from '@prisma/client';
+import { Status, User } from '@prisma/client';
 
 export interface Song {
   id: string;
+  userId: string;
+  user?: Partial<User>;
   title: string;
   lyrics: string;
   initialPhrase: string;
