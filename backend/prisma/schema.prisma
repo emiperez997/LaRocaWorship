@@ -36,17 +36,18 @@ model List {
 }
 
 model Song {
-  id            String     @id @default(uuid())
+  id            String         @id @default(uuid())
   title         String
   lyrics        String
   initialPhrase String
-  artist        String
-  categories    String[]
-  status        Status     @default(PENDING)
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  artistId      String
+  artist        Artist         @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  categories    SongCategory[]
+  status        Status         @default(PENDING)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   userId        String
-  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   lists         ListSong[] // Relación con ListSong
   favorites     Favorite[] // Relación con Favorite
 }
@@ -72,6 +73,30 @@ model Favorite {
   createdAt      DateTime @default(now())
 
   @@unique([songId, userId])
+}
+
+model Artist {
+  id        String   @id @default(uuid())
+  name      String
+  songs     Song[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String         @id @default(uuid())
+  name      String
+  songs     SongCategory[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model SongCategory {
+  id         String   @id @default(uuid())
+  songId     String
+  categoryId String
+  song       Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 // Enum para Role

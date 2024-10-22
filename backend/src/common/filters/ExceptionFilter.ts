@@ -13,12 +13,21 @@ export class PrismaClientExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest();
-    const status = HttpStatus.CONFLICT; // O el estado que prefieras
 
-    const message =
-      exception.code === 'P2002'
-        ? 'Unique constraint failed on the fields.'
-        : 'Database error';
+    let message = 'Database error';
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+    console.log(exception);
+
+    switch (exception.code) {
+      case 'P2002':
+        message = 'Unique constraint failed on the fields.';
+        status = HttpStatus.CONFLICT;
+        break;
+      default:
+        message = 'Database error';
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
+    }
 
     response.status(status).send({
       statusCode: status,

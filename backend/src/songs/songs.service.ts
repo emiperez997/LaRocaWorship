@@ -36,7 +36,7 @@ export class SongsService {
     });
   }
 
-  findAll(query: FiltersSongsDto): Promise<Song[]> {
+  async findAll(query: FiltersSongsDto) {
     const where: any = {};
 
     if (query.title) {
@@ -67,7 +67,17 @@ export class SongsService {
       where.status = query.status;
     }
 
-    return this.prisma.song.findMany({ where });
+    // return this.prisma.song.findMany({ where });
+
+    const songs = await this.prisma.song.groupBy({
+      by: ['title'],
+      _count: {
+        title: true,
+      },
+      where,
+    });
+
+    return songs;
   }
 
   async findOne(id: string): Promise<Song> {
