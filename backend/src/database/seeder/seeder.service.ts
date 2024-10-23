@@ -7,20 +7,28 @@ import { hashPassword } from '@src/utils/hash';
 export class SeederService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async seed() {}
+  async seed() {
+    const usersDB = await this.prisma.user.findMany();
 
-  async truncate() {
-    await this.prisma.$queryRaw`TRUNCATE TABLE "Artist" CASCADE`;
-    await this.prisma.$queryRaw`TRUNCATE TABLE "Song" CASCADE`;
-    await this.prisma.$queryRaw`TRUNCATE TABLE "List" CASCADE`;
-    await this.prisma.$queryRaw`TRUNCATE TABLE "ListSong" CASCADE`;
-    await this.prisma.$queryRaw`TRUNCATE TABLE "Favorite" CASCADE`;
-  }
+    if (usersDB) {
+      return 'Users already exists';
+    }
 
-  async seedUsers() {
-    const newUsers = users.map(async (user) => {
-      const password = await hashPassword(user.password);
-      return { ...user, password };
-    });
+    for (const user of users) {
+      const hashedPassword = await hashPassword(user.password);
+
+      await this.prisma.user.create({
+        data: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          email: user.email,
+          password: hashedPassword,
+          role: user.role,
+        },
+      });
+    }
+
+    return 'Create users';
   }
 }

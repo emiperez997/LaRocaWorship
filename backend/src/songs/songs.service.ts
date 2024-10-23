@@ -20,6 +20,11 @@ export class SongsService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createSongDto: CreateSongDto): Promise<Song> {
+    const artist = {
+      name: createSongDto.artist.trim(),
+      slug: createSongDto.artist.trim().replace(/\s+/g, '_').toLowerCase(),
+    };
+
     return this.prisma.song.create({
       data: {
         title: createSongDto.title,
@@ -28,11 +33,9 @@ export class SongsService {
         artist: {
           connectOrCreate: {
             where: {
-              name: createSongDto.artist,
+              slug: artist.slug,
             },
-            create: {
-              name: createSongDto.artist,
-            },
+            create: artist,
           },
         },
         categories: {
@@ -130,6 +133,20 @@ export class SongsService {
       throw new ForbiddenException();
     }
 
+    if (updateSongDto.artist && song.artist.name !== updateSongDto.artist) {
+      const artist = {
+        name: updateSongDto.artist.trim(),
+        slug: updateSongDto.artist.trim().replace(/\s+/g, '_').toLowerCase(),
+      };
+      await this.prisma.artist.upsert({
+        where: {
+          slug: artist.slug,
+        },
+        update: artist,
+        create: artist,
+      });
+    }
+
     try {
       const updatedSong = await this.prisma.song.update({
         where: {
@@ -139,16 +156,6 @@ export class SongsService {
           title: updateSongDto.title ?? song.title,
           lyrics: updateSongDto.lyrics ?? song.lyrics,
           initialPhrase: updateSongDto.initialPhrase ?? song.initialPhrase,
-          artist: {
-            connectOrCreate: {
-              where: {
-                name: updateSongDto.artist ?? song.artist.name,
-              },
-              create: {
-                name: updateSongDto.artist ?? song.artist.name,
-              },
-            },
-          },
           categories: {
             create: updateSongDto.categories.map((category) => ({
               category: {

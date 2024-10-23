@@ -1,0 +1,3 @@
+### Seed Users
+
+GET http://localhost:5000/api/seeder/users
