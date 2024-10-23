@@ -6,6 +6,23 @@ export class ArtistsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return this.prisma.artist.findMany();
+    return this.prisma.artist.findMany({
+      include: {
+        _count: {
+          select: {
+            songs: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findOne(id: string) {
+    return this.prisma.artist.findUnique({
+      where: { id },
+      include: {
+        songs: true,
+      },
+    });
   }
 }

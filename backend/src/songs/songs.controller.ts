@@ -20,7 +20,9 @@ import { Role, Status } from '@prisma/client';
 import { RequestWithUser } from '@src/common/dto/request-with-user';
 import { ActiveUser } from '@src/common/decorators/active-user.decorator';
 import { IUserActive } from '@src/common/interfaces/user-active.interface';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Songs')
 @Controller('songs')
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
@@ -37,6 +39,15 @@ export class SongsController {
   }
 
   @Get()
+  @ApiQuery({ name: 'artist', required: false })
+  @ApiQuery({ name: 'category', required: false })
+  @ApiQuery({ name: 'lyrics', required: false })
+  @ApiQuery({
+    name: 'status',
+    required: false,
+    enum: [Status.APPROVED, Status.PENDING, Status.REJECTED],
+  })
+  @ApiQuery({ name: 'title', required: false })
   findAll(@Query() query: FiltersSongsDto) {
     return this.songsService.findAll(query);
   }
@@ -47,6 +58,7 @@ export class SongsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   update(
     @Param('id') id: string,
     @Body(ValidationPipe) updateSongDto: UpdateSongDto,
@@ -56,12 +68,14 @@ export class SongsController {
   }
 
   @Patch(':id/status')
+  @ApiBearerAuth()
   @Auth(Role.ADMIN)
   updateStatus(@Param('id') id: string, @Body() status: Status) {
     return this.songsService.updateStatus(id, status);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @Auth(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.songsService.remove(id);

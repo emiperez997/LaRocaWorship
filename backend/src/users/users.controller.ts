@@ -15,7 +15,10 @@ import { FindByUuidParamDto } from '@src/common/dto/find-by-uuid-param.dto';
 import { AuthGuard } from '@src/auth/guards/auth.guard';
 import { Auth } from '@src/auth/decorators/auth.decorator';
 import { Role } from '@prisma/client';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
+@ApiBearerAuth()
 @Controller('users')
 @Auth(Role.ADMIN)
 export class UsersController {

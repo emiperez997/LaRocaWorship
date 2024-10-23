@@ -4,8 +4,4 @@ export class FindByUuidParamDto {
   @IsUUID()
   @IsOptional()
   id: string;
-
-  @IsUUID()
-  @IsOptional()
-  userId: string;
 }

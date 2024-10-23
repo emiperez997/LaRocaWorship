@@ -42,7 +42,7 @@ export class SongsService {
           create: createSongDto.categories.map((category) => ({
             category: {
               connect: {
-                name: category,
+                name: category.trim().toLowerCase(),
               },
             },
           })),
@@ -62,6 +62,7 @@ export class SongsService {
     if (query.title) {
       where.title = {
         contains: query.title,
+        mode: 'insensitive',
       };
     }
 
@@ -79,7 +80,14 @@ export class SongsService {
 
     if (query.category) {
       where.categories = {
-        has: query.category,
+        some: {
+          category: {
+            name: {
+              contains: query.category,
+              mode: 'insensitive',
+            },
+          },
+        },
       };
     }
 
@@ -87,17 +95,25 @@ export class SongsService {
       where.status = query.status;
     }
 
-    // return this.prisma.song.findMany({ where });
-
-    const songs = await this.prisma.song.groupBy({
-      by: ['title'],
-      _count: {
-        title: true,
-      },
+    return this.prisma.song.findMany({
       where,
+      include: {
+        artist: {
+          select: {
+            name: true,
+          },
+        },
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
-
-    return songs;
   }
 
   async findOne(id: string): Promise<Song> {

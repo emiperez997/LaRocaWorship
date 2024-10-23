@@ -1,6 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ArtistsService } from './artists.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Artists')
 @Controller('artists')
 export class ArtistsController {
   constructor(private readonly artistsService: ArtistsService) {}
@@ -8,5 +10,10 @@ export class ArtistsController {
   @Get()
   async findAll() {
     return this.artistsService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.artistsService.findOne(id);
   }
 }

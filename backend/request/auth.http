@@ -4,7 +4,7 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "emiperez@gmail.com",
+    "email": "emi.perez@gmail.com",
     "password": "12345678"
 }
 

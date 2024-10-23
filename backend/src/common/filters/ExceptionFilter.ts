@@ -5,13 +5,14 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { Response } from 'express';
 import { FastifyReply } from 'fastify';
 
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaClientExceptionFilter implements ExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<FastifyReply>();
+    const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
 
     let message = 'Database error';
@@ -29,7 +30,7 @@ export class PrismaClientExceptionFilter implements ExceptionFilter {
         status = HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    response.status(status).send({
+    response.status(status).json({
       statusCode: status,
       message,
     });
