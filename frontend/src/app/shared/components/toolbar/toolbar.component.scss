@@ -1,0 +1,9 @@
+@use "../../styles/colors.scss" as colors;
+
+.mat-toolbar {
+  background-color: colors.$russian-violet;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
