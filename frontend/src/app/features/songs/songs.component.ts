@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SongsService } from '../../core/services/songs/songs.service';
+import { SongResponse } from '../../shared/interfaces/song-response';
 
 @Component({
   selector: 'app-songs',
@@ -7,14 +8,13 @@ import { SongsService } from '../../core/services/songs/songs.service';
   styleUrl: './songs.component.scss',
 })
 export class SongsComponent implements OnInit {
-  songs: any[] = [];
+  songs: SongResponse[] = [];
 
   constructor(private readonly songsService: SongsService) {}
 
   ngOnInit(): void {
-    this.songsService.getSongs().subscribe((songs) => {
+    this.songsService.getSongs('api').subscribe((songs) => {
       this.songs = songs;
-      console.log(this.songs);
     });
   }
 }

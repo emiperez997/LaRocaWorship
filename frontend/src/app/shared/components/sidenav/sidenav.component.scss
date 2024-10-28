@@ -1,5 +1,15 @@
+.container {
+  overflow: hidden;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (width > 768px) {
+  button {
+    display: none;
+  }
 }

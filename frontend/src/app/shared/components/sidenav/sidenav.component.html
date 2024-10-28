@@ -1,15 +1,17 @@
-<div class="header">
-  <h4>Platform Learning</h4>
-  <button mat-icon-button (click)="toggleEvent.emit()">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
+<div class="container">
+  <div class="header">
+    <h4>Platform Learning</h4>
+    <button mat-icon-button (click)="toggleEvent.emit()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-<mat-nav-list>
-  @for (item of listItems; track $index) {
-  <a mat-list-item [routerLink]="item.url" (click)="toggleEvent.emit()">
-    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-    <span matListItemLine>{{ item.name }}</span>
-  </a>
-  }
-</mat-nav-list>
+  <mat-nav-list>
+    @for (item of listItems; track $index) {
+    <a mat-list-item [routerLink]="item.url" (click)="toggleEvent.emit()">
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemLine>{{ item.name }}</span>
+    </a>
+    }
+  </mat-nav-list>
+</div>

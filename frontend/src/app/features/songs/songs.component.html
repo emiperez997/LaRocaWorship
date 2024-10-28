@@ -1,1 +1,7 @@
-<p>songs works!</p>
+<h1>Canciones</h1>
+
+<div class="songs-container">
+  @for (song of songs; track song.title) {
+  <app-song-card [song]="song" />
+  }
+</div>

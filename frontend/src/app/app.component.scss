@@ -1,6 +1,7 @@
 .drawer-container {
   width: 100%;
   height: 100vh;
+  overflow: hidden;
 }
 
 .sidenav {
@@ -10,4 +11,14 @@
 
 .main-content {
   padding: 20px 40px;
+}
+
+app-sidenav {
+  overflow: hidden;
+}
+
+@media (width > 768px) {
+  .sidenav {
+    width: 250px;
+  }
 }

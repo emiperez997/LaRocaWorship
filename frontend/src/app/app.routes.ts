@@ -11,4 +11,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/songs/songs.module').then((m) => m.SongsModule),
   },
+  {
+    path: 'artists',
+    loadChildren: () =>
+      import('./features/artists/artists.module').then((m) => m.ArtistsModule),
+  },
 ];

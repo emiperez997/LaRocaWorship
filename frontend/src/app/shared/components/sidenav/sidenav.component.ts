@@ -28,7 +28,7 @@ export class SidenavComponent {
     {
       name: 'Artistas',
       icon: 'person',
-      url: '/artistas',
+      url: '/artists',
     },
     {
       name: 'Inicio de sesión',

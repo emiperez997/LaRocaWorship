@@ -1,0 +1,26 @@
+.song-card {
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+.footer {
+  padding: 16px;
+  position: absolute;
+  bottom: 0;
+}
+
+.chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chip a {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

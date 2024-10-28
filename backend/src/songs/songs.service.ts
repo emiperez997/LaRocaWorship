@@ -59,48 +59,37 @@ export class SongsService {
   async findAll(query: FiltersSongsDto) {
     const where: any = {};
 
-    if (query.title) {
-      where.title = {
-        contains: query.title,
-        mode: 'insensitive',
-      };
-    }
-
-    if (query.lyrics) {
-      where.lyrics = {
-        contains: query.lyrics,
-      };
-    }
-
-    if (query.artist) {
-      where.artist = {
-        contains: query.artist,
-      };
-    }
-
-    if (query.category) {
-      where.categories = {
-        some: {
-          category: {
-            name: {
-              contains: query.category,
-              mode: 'insensitive',
+    const filters = [
+      { key: 'title', options: { contains: query.title, mode: 'insensitive' } },
+      { key: 'lyrics', options: { contains: query.lyrics } },
+      { key: 'artist', options: { contains: query.artist } },
+      {
+        key: 'category',
+        options: {
+          some: {
+            category: {
+              name: { contains: query.category, mode: 'insensitive' },
             },
           },
         },
-      };
-    }
+      },
+      { key: 'status', options: query.status },
+    ];
 
-    if (query.status) {
-      where.status = query.status;
-    }
+    filters.forEach((filter) => {
+      if (query[filter.key]) {
+        where[filter.key === 'category' ? 'categories' : filter.key] =
+          filter.options;
+      }
+    });
 
-    return this.prisma.song.findMany({
+    const songs = await this.prisma.song.findMany({
       where,
       include: {
         artist: {
           select: {
             name: true,
+            slug: true,
           },
         },
         categories: {
@@ -114,6 +103,49 @@ export class SongsService {
         },
       },
     });
+
+    const songsWithCounts = this.getSongDetailsWithCounts(
+      songs as unknown as Partial<Song>[],
+    );
+
+    return songsWithCounts;
+  }
+
+  getSongDetailsWithCounts(
+    songs: Partial<Song>[],
+  ): { title: string; count: number; details: Partial<Song>[] }[] {
+    const titleMap: {
+      [title: string]: {
+        count: number;
+        details: Partial<Song>[];
+        artist: string;
+      };
+    } = {};
+
+    // Recorrer la lista y agrupar las canciones por título
+    songs.forEach((song) => {
+      if (song.title) {
+        if (!titleMap[song.title]) {
+          titleMap[song.title] = { count: 0, details: [], artist: '' };
+        }
+        titleMap[song.title].count += 1;
+        titleMap[song.title].details.push({
+          id: song.id,
+          initialPhrase: song.initialPhrase,
+        });
+        titleMap[song.title].artist = song.artist?.name!;
+      }
+    });
+
+    // Crear un arreglo con los resultados, incluyendo los detalles
+    return Object.entries(titleMap).map(
+      ([title, { count, details, artist }]) => ({
+        title,
+        count,
+        details,
+        artist,
+      }),
+    );
   }
 
   async findOne(id: string): Promise<Song> {
@@ -122,6 +154,12 @@ export class SongsService {
         id,
       },
       include: {
+        artist: {
+          select: {
+            name: true,
+            slug: true,
+          },
+        },
         user: {
           select: {
             id: true,

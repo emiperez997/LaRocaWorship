@@ -1,0 +1,21 @@
+<section class="container">
+  <a [routerLink]="'/songs'" class="back">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+
+  <article class="header">
+    <h2>{{ song?.title }}</h2>
+    <h5>{{ song?.artist?.name }}</h5>
+  </article>
+
+  <mat-card class="lyrics">
+    <mat-card-content>
+      <!-- <div [innerHTML]="song?.lyrics | highlight"></div> -->
+      <pre [innerHTML]="song?.lyrics | highlight"></pre>
+    </mat-card-content>
+  </mat-card>
+
+  <small>
+    Subido por <strong>{{ song?.user?.username }}</strong>
+  </small>
+</section>
