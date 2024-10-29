@@ -9,6 +9,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { DetailsComponent } from './pages/details/details.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [SongsComponent, SongCardComponent, DetailsComponent],
@@ -18,6 +20,8 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     MatCardModule,
     MatChipsModule,
     MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
     HighlightPipe,
   ],
   providers: [SongsService],

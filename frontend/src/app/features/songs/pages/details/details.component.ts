@@ -11,6 +11,10 @@ import { Song } from '../../../../core/services/songs/song.entity';
 })
 export class DetailsComponent implements OnInit {
   song!: Partial<Song> | undefined;
+  originalLyrics!: string | undefined;
+
+  notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  notesFlat = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -23,6 +27,39 @@ export class DetailsComponent implements OnInit {
     this.songService.getSong(id, 'api').subscribe((song) => {
       console.log(song);
       this.song = song;
+      this.originalLyrics = song?.lyrics;
     });
+  }
+
+  transposeUp(step: number) {
+    const songTrasposed = this.song?.lyrics?.replace(
+      /([A-G])(#?)/g,
+      (match, note, sharp) => {
+        const index = this.notes.indexOf(note + (sharp || ''));
+        const newIndex = (index + step + this.notes.length) % this.notes.length;
+
+        return this.notes[newIndex];
+      }
+    );
+
+    this.song = { ...this.song, lyrics: songTrasposed };
+  }
+
+  transposeDown(step: number) {
+    const songTrasposed = this.song?.lyrics?.replace(
+      /([A-G])(#?)/g,
+      (match, note, sharp) => {
+        const index = this.notes.indexOf(note + (sharp || ''));
+        const newIndex = (index - step + this.notes.length) % this.notes.length;
+
+        return this.notes[newIndex];
+      }
+    );
+
+    this.song = { ...this.song, lyrics: songTrasposed };
+  }
+
+  resetTranspose() {
+    this.song = { ...this.song, lyrics: this.originalLyrics };
   }
 }

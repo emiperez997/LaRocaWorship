@@ -1,6 +1,7 @@
 <section class="container">
   <a [routerLink]="'/songs'" class="back">
     <mat-icon>arrow_back</mat-icon>
+    Volver
   </a>
 
   <article class="header">
@@ -13,6 +14,32 @@
       <!-- <div [innerHTML]="song?.lyrics | highlight"></div> -->
       <pre [innerHTML]="song?.lyrics | highlight"></pre>
     </mat-card-content>
+
+    <mat-card-actions>
+      <button
+        matTooltip="Subir tono"
+        mat-icon-button
+        color="primary"
+        (click)="transposeUp(1)"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      <button
+        matTooltip="Bajar tono"
+        mat-icon-button
+        (click)="transposeDown(1)"
+      >
+        <mat-icon>remove</mat-icon>
+      </button>
+      <button
+        matTooltip="Tono original"
+        mat-icon-button
+        color="primary"
+        (click)="resetTranspose()"
+      >
+        <mat-icon>trip_origin</mat-icon>
+      </button>
+    </mat-card-actions>
   </mat-card>
 
   <small>
