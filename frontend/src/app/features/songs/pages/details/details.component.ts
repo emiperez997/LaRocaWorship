@@ -8,6 +8,7 @@ import { Song } from '../../../../core/services/songs/song.entity';
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class DetailsComponent implements OnInit {
   song!: Partial<Song> | undefined;
@@ -61,5 +62,14 @@ export class DetailsComponent implements OnInit {
 
   resetTranspose() {
     this.song = { ...this.song, lyrics: this.originalLyrics };
+  }
+
+  copyLyrics() {
+    const el = document.createElement('textarea');
+    el.value = this.song?.lyrics || '';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
   }
 }

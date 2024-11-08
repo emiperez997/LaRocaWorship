@@ -1,1 +1,7 @@
 <h1>Artistas</h1>
+
+<div class="artists-container">
+  @for (artist of artists; track $index) {
+  <app-artist-card [artist]="artist" />
+  }
+</div>

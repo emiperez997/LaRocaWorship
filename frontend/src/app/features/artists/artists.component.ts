@@ -6,16 +6,17 @@ import { ArtistResponse } from '../../shared/interfaces/artist-response';
   selector: 'app-artists',
   templateUrl: './artists.component.html',
   styleUrl: './artists.component.scss',
+  standalone: false,
 })
 export class ArtistsComponent implements OnInit {
-  artist!: ArtistResponse[];
+  artists!: ArtistResponse[];
 
   constructor(private readonly artistService: ArtistsService) {}
 
   ngOnInit(): void {
     this.artistService.getArtists('api').subscribe((artist) => {
-      this.artist = artist;
-      console.log(this.artist);
+      this.artists = artist;
+      console.log(this.artists);
     });
   }
 }

@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ArtistCardComponent } from './artist-card/artist-card.component';
 import { ArtistsComponent } from './artists.component';
+import { CommonModule } from '@angular/common';
 import { ArtistRoutingModule } from './artist-routing.module';
 import { ArtistsService } from '../../core/services/artists/artists.service';
-import { ArtistCardComponent } from './artist-card/artist-card.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [ArtistsComponent, ArtistCardComponent],
-  imports: [CommonModule, ArtistRoutingModule],
+  imports: [ArtistRoutingModule, SharedModule],
   providers: [ArtistsService],
 })
 export class ArtistsModule {}

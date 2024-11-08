@@ -1,1 +1,19 @@
-<p>artist-card works!</p>
+<mat-card class="artist-card">
+  <mat-card-header>
+    <mat-card-title>
+      <div
+        [matBadge]="artist._count?.songs"
+        matBadgeOverlap="false"
+        class="demo-section"
+      >
+        {{ artist.name }}
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-footer class="footer">
+    <mat-chip-set>
+      <a mat-flat-button [routerLink]="artist.slug" matTooltip=""> Ver más </a>
+    </mat-chip-set>
+  </mat-card-footer>
+</mat-card>

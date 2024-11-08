@@ -13,9 +13,15 @@
     <mat-card-content>
       <!-- <div [innerHTML]="song?.lyrics | highlight"></div> -->
       <pre [innerHTML]="song?.lyrics | highlight"></pre>
+      <hr />
     </mat-card-content>
 
     <mat-card-actions>
+      <button matTooltip="Copiar letra" mat-icon-button (click)="copyLyrics()">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+
+      <br />
       <button
         matTooltip="Subir tono"
         mat-icon-button

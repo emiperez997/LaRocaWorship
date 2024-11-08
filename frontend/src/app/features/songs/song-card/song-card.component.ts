@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-song-card',
   templateUrl: './song-card.component.html',
   styleUrl: './song-card.component.scss',
+  standalone: false,
 })
 export class SongCardComponent implements OnInit {
   @Input() song!: SongResponse;
