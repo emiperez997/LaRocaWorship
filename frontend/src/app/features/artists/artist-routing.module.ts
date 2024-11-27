@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: ArtistsComponent,
   },
+  {
+    path: ':name',
+    component: ArtistsComponent,
+  },
 ];
 
 @NgModule({

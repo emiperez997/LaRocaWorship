@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
-import { ToolbarModule } from './shared/components/toolbar/toolbar.module';
-import { SidenavModule } from './shared/components/sidenav/sidenav.module';
+import { SharedModule } from './shared/shared.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    ToolbarModule,
-    MatDrawerContainer,
-    MatDrawer,
-    SidenavModule,
-  ],
+  imports: [RouterOutlet, MatDrawerContainer, MatDrawer, SharedModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

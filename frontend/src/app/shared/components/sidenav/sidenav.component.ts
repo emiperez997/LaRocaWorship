@@ -33,7 +33,7 @@ export class SidenavComponent {
     {
       name: 'Inicio de sesión',
       icon: 'login',
-      url: '/login',
+      url: '/auth/login',
     },
   ];
 }
