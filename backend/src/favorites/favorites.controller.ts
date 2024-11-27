@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
@@ -27,7 +28,7 @@ export class FavoritesController {
 
   @Post()
   create(
-    @Body() createFavoriteDto: CreateFavoriteDto,
+    @Body(ValidationPipe) createFavoriteDto: CreateFavoriteDto,
     @ActiveUser() user: IUserActive,
   ) {
     return this.favoritesService.create(createFavoriteDto, user);
@@ -49,7 +50,7 @@ export class FavoritesController {
   @Patch(':id')
   update(
     @Param() params: FindByUuidParamDto,
-    @Body() updateFavoriteDto: UpdateFavoriteDto,
+    @Body(ValidationPipe) updateFavoriteDto: UpdateFavoriteDto,
     @ActiveUser() user: IUserActive,
   ) {
     return this.favoritesService.update(params.id, updateFavoriteDto, user);

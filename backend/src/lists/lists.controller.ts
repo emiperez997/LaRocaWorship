@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
@@ -41,7 +42,7 @@ export class ListsController {
 
   @Post()
   create(
-    @Body() createListDto: CreateListDto,
+    @Body(ValidationPipe) createListDto: CreateListDto,
     @ActiveUser() user: IUserActive,
   ) {
     return this.listsService.create(createListDto, user);
@@ -55,7 +56,7 @@ export class ListsController {
   @Patch(':id')
   update(
     @Param() params: FindByUuidParamDto,
-    @Body() updateListDto: UpdateListDto,
+    @Body(ValidationPipe) updateListDto: UpdateListDto,
     @ActiveUser() user: IUserActive,
   ) {
     return this.listsService.update(params.id, updateListDto, user);
