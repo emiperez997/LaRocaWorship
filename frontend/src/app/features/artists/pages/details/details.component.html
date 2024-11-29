@@ -1,0 +1,16 @@
+<section class="container-details">
+  <a [routerLink]="'/artists'" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Volver
+  </a>
+
+  <article class="header">
+    <h2>{{ artist?.name }}</h2>
+  </article>
+
+  <div class="songs-container">
+    @for (song of artist?.songs; track song.title) {
+    <app-song-card [song]="song" />
+    }
+  </div>
+</section>

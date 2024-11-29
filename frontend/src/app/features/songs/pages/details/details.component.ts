@@ -8,7 +8,6 @@ import { Song } from '../../../../core/services/songs/song.entity';
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
   encapsulation: ViewEncapsulation.None,
-  standalone: false,
 })
 export class DetailsComponent implements OnInit {
   song!: Partial<Song> | undefined;

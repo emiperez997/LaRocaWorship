@@ -1,0 +1,7 @@
+### GET artists
+
+GET http://localhost:5000/api/artists
+
+### GET artist by slug
+
+GET http://localhost:5000/api/artists/slug/job-gonzalez

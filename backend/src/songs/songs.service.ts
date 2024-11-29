@@ -14,6 +14,7 @@ import { PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { FiltersSongsDto } from './dto/filters-songs.dto';
 import { Status } from '@prisma/client';
 import { IUserActive } from '@src/common/interfaces/user-active.interface';
+import { SongResponse } from './entities/song-response.entity';
 
 @Injectable()
 export class SongsService {
@@ -62,7 +63,15 @@ export class SongsService {
     const filters = [
       { key: 'title', options: { contains: query.title, mode: 'insensitive' } },
       { key: 'lyrics', options: { contains: query.lyrics } },
-      { key: 'artist', options: { contains: query.artist } },
+      {
+        key: 'artist',
+        options: {
+          name: {
+            contains: query.artist,
+            mode: 'insensitive',
+          },
+        },
+      },
       {
         key: 'category',
         options: {
@@ -111,9 +120,7 @@ export class SongsService {
     return songsWithCounts;
   }
 
-  getSongDetailsWithCounts(
-    songs: Partial<Song>[],
-  ): { title: string; count: number; details: Partial<Song>[] }[] {
+  getSongDetailsWithCounts(songs: Partial<Song>[]): SongResponse[] {
     const titleMap: {
       [title: string]: {
         count: number;

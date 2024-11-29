@@ -4,3 +4,11 @@
   gap: 1rem;
   justify-content: center;
 }
+
+app-song-card {
+  width: 100%;
+
+  @media (width > 768px) {
+    width: 200px;
+  }
+}

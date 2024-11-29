@@ -38,6 +38,9 @@ importers:
       '@angular/router':
         specifier: ^18.1.0
         version: 18.2.7(@angular/common@18.2.7(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10))(@angular/platform-browser@18.2.7(@angular/animations@18.2.7(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10)))(@angular/common@18.2.7(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10)))(rxjs@7.8.1)
+      '@ngrx/store':
+        specifier: 18.1.1
+        version: 18.1.1(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1
@@ -1343,6 +1346,12 @@ packages:
     resolution: {integrity: sha512-x0fWaQtYp4E6sktbsdAqnehxDgEc/VwM7uLsRCYWaiGu0ykYdZPiS8zCWdnjHwyiumousxfBm4SO31eXqwEZhQ==}
     cpu: [x64]
     os: [win32]
+
+  '@ngrx/store@18.1.1':
+    resolution: {integrity: sha512-K0v1akJ2sEnIeb1AUA064+ksgRgbMgVG9HbSsLBxENbFjK2ZvKRxo1bpOw6WHW9+hyDTlhZGl7+gUtjmo3497g==}
+    peerDependencies:
+      '@angular/core': ^18.0.0
+      rxjs: ^6.5.3 || ^7.5.0
 
   '@ngtools/webpack@18.2.7':
     resolution: {integrity: sha512-BmnFxss6zGobGyq9Mi7736golbK8RLgF+zYCQZ+4/OfMMA1jKVoELnyJqNyAx+DQn3m1qKVBjtGEL7pTNpPzOw==}
@@ -5734,6 +5743,12 @@ snapshots:
 
   '@msgpackr-extract/msgpackr-extract-win32-x64@3.0.3':
     optional: true
+
+  '@ngrx/store@18.1.1(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/core': 18.2.7(rxjs@7.8.1)(zone.js@0.14.10)
+      rxjs: 7.8.1
+      tslib: 2.7.0
 
   '@ngtools/webpack@18.2.7(@angular/compiler-cli@18.2.7(@angular/compiler@18.2.7(@angular/core@18.2.7(rxjs@7.8.1)(zone.js@0.14.10)))(typescript@5.5.4))(typescript@5.5.4)(webpack@5.94.0(esbuild@0.23.0))':
     dependencies:

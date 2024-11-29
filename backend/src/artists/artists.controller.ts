@@ -16,4 +16,9 @@ export class ArtistsController {
   async findOne(@Param('id') id: string) {
     return this.artistsService.findOne(id);
   }
+
+  @Get('slug/:slug')
+  async findBySlug(@Param('slug') slug: string) {
+    return this.artistsService.findBySlug(slug);
+  }
 }

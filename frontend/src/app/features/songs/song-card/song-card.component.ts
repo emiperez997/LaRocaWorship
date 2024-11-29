@@ -4,6 +4,7 @@ import { SongResponse } from '../../../shared/interfaces/song-response';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Song } from '../../../core/services/songs/song.entity';
 
 @Component({
   selector: 'app-song-card',

@@ -7,11 +7,11 @@
   <mat-card-footer class="footer">
     <mat-chip-set>
       @for(s of song.details; track s.id) {
-      <a [routerLink]="s.id">
-        <mat-chip class="chip">
+      <mat-chip class="chip">
+        <a [routerLink]="['/songs', s.id]">
           <mat-icon>music_note</mat-icon>
-        </mat-chip>
-      </a>
+        </a>
+      </mat-chip>
       }
     </mat-chip-set>
   </mat-card-footer>

@@ -5,7 +5,6 @@ import { Artist } from '../../../core/services/artists/entity/artist';
   selector: 'app-artist-card',
   templateUrl: './artist-card.component.html',
   styleUrl: './artist-card.component.scss',
-  standalone: false,
 })
 export class ArtistCardComponent {
   @Input() artist!: Artist;
