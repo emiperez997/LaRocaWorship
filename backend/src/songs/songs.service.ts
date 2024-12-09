@@ -23,7 +23,7 @@ export class SongsService {
   create(createSongDto: CreateSongDto): Promise<Song> {
     const artist = {
       name: createSongDto.artist.trim(),
-      slug: createSongDto.artist.trim().replace(/\s+/g, '_').toLowerCase(),
+      slug: createSongDto.artist.trim().replace(/\s+/g, '-').toLowerCase(),
     };
 
     return this.prisma.song.create({

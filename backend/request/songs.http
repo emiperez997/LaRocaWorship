@@ -10,11 +10,11 @@ GET http://localhost:5000/api/songs/6079475a-7de4-4720-b8db-383e9c101926
  
 POST http://localhost:5000/api/songs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZjQ4Mzg3LThkMzAtNDBmNS04NzVmLTU4MTJhOGNiMzRlMSIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcyOTEyMzE2MCwiZXhwIjoxNzI5MTI0OTYwfQ.G868nHVwpYispMHrxpm-McDH5T4ZrBCxGLMevD4_tCA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YTA1N2I3LTIzYWQtNDFmMy04NWJkLTFlM2RiYTA4YTU2ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzMzNDU4ODcsImV4cCI6MTczMzM0NzY4N30.A2XJnLIpfi_XIXybCxhy6PM2hWDBrC0xEovJtY5OJcU
 
 {
     "title": "Cantando Santo",
-    "lyrics": "[A] [E] [F#m] [D] \nYo quiero estar, adorandote Señor \n [A] [E] [D] \nPostrado hoy ante tu altar \n [A] [E] \nCantando Santo, Santo \n [F#m] [D] \nSanto es el Señor \n [A] [E] [D] \nPoderoso, para siempre reinará",
+    "lyrics": "[A]    [E]       [F#m]      [D] \nYo quiero estar, adorandote Señor \n [A] [E] [D] \nPostrado hoy ante tu altar \n [A] [E] \nCantando Santo, Santo \n [F#m] [D] \nSanto es el Señor \n [A] [E] [D] \nPoderoso, para siempre reinará",
     "initialPhrase": "Yo quiero estar, adorandote Señor",
     "artist": "Job Gonzalez",
     "categories": ["Adoración"]

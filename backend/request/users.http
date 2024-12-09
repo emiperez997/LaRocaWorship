@@ -1,6 +1,7 @@
 ### GET All Users 
 
 GET http://localhost:5000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2YTA1N2I3LTIzYWQtNDFmMy04NWJkLTFlM2RiYTA4YTU2ZiIsInVzZXJuYW1lIjoiZW1pcGVyZXoiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzMzMjk1NDQsImV4cCI6MTczMzMzMTM0NH0.WKwNWvq-xnsK55iVZEP_go9WqkIQnXCjnH272P712i4
 
 ### GET User By Id
 

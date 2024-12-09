@@ -10,8 +10,12 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { AngularToastifyModule } from 'angular-toastify';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [SidenavComponent, ToolbarComponent],
@@ -26,6 +30,7 @@ import { MatListModule } from '@angular/material/list';
     MatListModule,
     MatBadgeModule,
     RouterModule,
+    AngularToastifyModule,
   ],
   exports: [
     CommonModule,
@@ -34,7 +39,12 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatToolbarModule,
+    MatListModule,
     MatBadgeModule,
+    RouterModule,
+    AngularToastifyModule,
+
     SidenavComponent,
     ToolbarComponent,
   ],

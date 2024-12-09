@@ -4,7 +4,7 @@ export const songs: Partial<Song>[] = [
   {
     title: 'Cantando Santo',
     lyrics:
-      '[A] [E] [F#m] [D] \nYo quiero estar, adorandote Señor \n [A] [E] [D] \nPostrado hoy ante tu altar \n [A] [E] \nCantando Santo, Santo \n [F#m] [D] \nSanto es el Señor \n [A] [E] [D] \nPoderoso, para siempre reinará',
+      '[A]      [E]     [F#m]     [D] \nYo quiero estar, adorandote Señor \n [A]     [E]     [D] \nPostrado hoy ante tu altar \n [A]     [E] \nCantando Santo, Santo \n [F#m]      [D] \nSanto es el Señor \n [A]     [E]     [D] \nPoderoso, para siempre reinará',
     initialPhrase: 'Yo quiero estar, adorandote Señor',
     artist: {
       name: 'Job Gonzalez',
